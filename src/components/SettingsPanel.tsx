@@ -4,47 +4,44 @@ import {
   AlertCircle, ExternalLink, Zap, Brain, Globe
 } from 'lucide-react';
 
-const SettingsPanel = ({ llmProvider, darkMode, onClose }) => {
-  const [newCustomModel, setNewCustomModel] = useState('');
-
-  const presetProviders = {
-    openai: {
-      name: 'OpenAI',
-      baseUrl: 'https://api.openai.com/v1',
-      defaultModels: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
-      description: 'Most popular and reliable AI models'
-    },
-    anthropic: {
-      name: 'Anthropic Claude',
-      baseUrl: 'https://api.anthropic.com/v1',
-      defaultModels: ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'],
-      description: 'Advanced reasoning and analysis'
-    },
-    ollama: {
-      name: 'Ollama (Local)',
-      baseUrl: 'http://localhost:11434/v1',
-      defaultModels: ['llama2', 'mistral', 'codellama'],
-      description: 'Run models locally on your machine'
-    },
-    groq: {
-      name: 'Groq',
-      baseUrl: 'https://api.groq.com/openai/v1',
-      defaultModels: ['mixtral-8x7b-32768', 'llama2-70b-4096'],
-      description: 'Ultra-fast inference speeds'
-    },
-    deepseek: {
-      name: 'DeepSeek',
-      baseUrl: 'https://api.deepseek.com/v1',
-      defaultModels: ['deepseek-chat', 'deepseek-coder'],
-      description: 'Advanced coding and general AI models'
-    },
-    custom: {
-      name: 'Custom API',
-      baseUrl: '',
-      defaultModels: [],
-      description: 'Connect to any OpenAI-compatible API'
-    }
-  };
+const presetProviders = {
+  openai: {
+    name: 'OpenAI',
+    baseUrl: 'https://api.openai.com/v1',
+    defaultModels: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
+    description: 'Most popular and reliable AI models'
+  },
+  anthropic: {
+    name: 'Anthropic Claude',
+    baseUrl: 'https://api.anthropic.com/v1',
+    defaultModels: ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'],
+    description: 'Advanced reasoning and analysis'
+  },
+  ollama: {
+    name: 'Ollama (Local)',
+    baseUrl: 'http://localhost:11434/v1',
+    defaultModels: ['llama2', 'mistral', 'codellama'],
+    description: 'Run models locally on your machine'
+  },
+  groq: {
+    name: 'Groq',
+    baseUrl: 'https://api.groq.com/openai/v1',
+    defaultModels: ['mixtral-8x7b-32768', 'llama2-70b-4096'],
+    description: 'Ultra-fast inference speeds'
+  },
+  deepseek: {
+    name: 'DeepSeek',
+    baseUrl: 'https://api.deepseek.com/v1', // Add /v1 here
+    defaultModels: ['deepseek-chat', 'deepseek-coder'], // These are correct
+    description: 'Advanced coding and general AI models'
+  },
+  custom: {
+    name: 'Custom API',
+    baseUrl: '',
+    defaultModels: [],
+    description: 'Connect to any OpenAI-compatible API'
+  }
+};
 
   const addCustomModel = () => {
     if (newCustomModel.trim() && !llmProvider.customModels.includes(newCustomModel.trim())) {
