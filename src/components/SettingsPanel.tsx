@@ -4,54 +4,60 @@ import {
   AlertCircle, ExternalLink, Zap, Brain, Globe
 } from 'lucide-react';
 
-const presetProviders = {
-  openai: {
-    name: 'OpenAI',
-    baseUrl: 'https://api.openai.com/v1',
-    defaultModels: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
-    description: 'Most popular and reliable AI models'
-  },
-  anthropic: {
-    name: 'Anthropic Claude',
-    baseUrl: 'https://api.anthropic.com/v1',
-    defaultModels: ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'],
-    description: 'Advanced reasoning and analysis'
-  },
-  ollama: {
-    name: 'Ollama (Local)',
-    baseUrl: 'http://localhost:11434/v1',
-    defaultModels: ['llama2', 'mistral', 'codellama'],
-    description: 'Run models locally on your machine'
-  },
-  groq: {
-    name: 'Groq',
-    baseUrl: 'https://api.groq.com/openai/v1',
-    defaultModels: ['mixtral-8x7b-32768', 'llama2-70b-4096'],
-    description: 'Ultra-fast inference speeds'
-  },
-  deepseek: {
-    name: 'DeepSeek',
-    baseUrl: 'https://api.deepseek.com/v1', // Add /v1 here
-    defaultModels: ['deepseek-chat', 'deepseek-coder'], // These are correct
-    description: 'Advanced coding and general AI models'
-  },
-  custom: {
-    name: 'Custom API',
-    baseUrl: '',
-    defaultModels: [],
-    description: 'Connect to any OpenAI-compatible API'
-  }
-};
+const SettingsPanel = ({ llmProvider, darkMode, onClose }) => {
+  const [newCustomModel, setNewCustomModel] = useState('');
+
+  const presetProviders = {
+    openai: {
+      name: 'OpenAI',
+      baseUrl: 'https://api.openai.com/v1',
+      defaultModels: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
+      description: 'Most popular and reliable AI models'
+    },
+    anthropic: {
+      name: 'Anthropic Claude',
+      baseUrl: 'https://api.anthropic.com/v1',
+      defaultModels: ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'],
+      description: 'Advanced reasoning and analysis'
+    },
+    ollama: {
+      name: 'Ollama (Local)',
+      baseUrl: 'http://localhost:11434/v1',
+      defaultModels: ['llama2', 'mistral', 'codellama'],
+      description: 'Run models locally on your machine'
+    },
+    groq: {
+      name: 'Groq',
+      baseUrl: 'https://api.groq.com/openai/v1',
+      defaultModels: ['mixtral-8x7b-32768', 'llama2-70b-4096'],
+      description: 'Ultra-fast inference speeds'
+    },
+    deepseek: {
+      name: 'DeepSeek',
+      baseUrl: 'https://api.deepseek.com/v1',
+      defaultModels: ['deepseek-chat', 'deepseek-coder'],
+      description: 'Advanced coding and general AI models'
+    },
+    custom: {
+      name: 'Custom API',
+      baseUrl: '',
+      defaultModels: [],
+      description: 'Connect to any OpenAI-compatible API'
+    }
+  };
 
   const addCustomModel = () => {
-    if (newCustomModel.trim() && !llmProvider.customModels.includes(newCustomModel.trim())) {
-      llmProvider.setCustomModels([...llmProvider.customModels, newCustomModel.trim()]);
+    if (newCustomModel.trim() && (!llmProvider.customModels || !llmProvider.customModels.includes(newCustomModel.trim()))) {
+      const currentCustomModels = llmProvider.customModels || [];
+      llmProvider.setCustomModels([...currentCustomModels, newCustomModel.trim()]);
       setNewCustomModel('');
     }
   };
 
   const removeCustomModel = (model) => {
-    llmProvider.setCustomModels(llmProvider.customModels.filter(m => m !== model));
+    if (llmProvider.customModels) {
+      llmProvider.setCustomModels(llmProvider.customModels.filter(m => m !== model));
+    }
     if (llmProvider.apiSettings.customModel === model) {
       llmProvider.setApiSettings(prev => ({ 
         ...prev, 
@@ -284,7 +290,7 @@ const presetProviders = {
                                  : 'bg-white border-gray-300 text-gray-800'
                       }`}
                     >
-                      {llmProvider.availableModels.length > 0 ? (
+                      {llmProvider.availableModels && llmProvider.availableModels.length > 0 ? (
                         llmProvider.availableModels.map(model => (
                           <option key={model} value={model}>{model}</option>
                         ))
@@ -323,7 +329,7 @@ const presetProviders = {
                           ...prev, 
                           customModel: e.target.value 
                         }))}
-                        placeholder="Enter custom model name (e.g., gpt-4-turbo)"
+                        placeholder="Enter custom model name (e.g., deepseek-chat)"
                         className={`w-full p-3 border rounded-lg ${
                           darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                                    : 'bg-white border-gray-300 text-gray-800 placeholder-gray-500'
@@ -352,12 +358,12 @@ const presetProviders = {
                           </button>
                         </div>
                         
-                        {llmProvider.customModels.length > 0 && (
+                        {llmProvider.customModels && llmProvider.customModels.length > 0 && (
                           <div className="space-y-1">
                             <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                               Quick select:
                             </p>
-                            {llmProvider.customModels.map((model, index) => (
+                            {llmProvider.customModels && llmProvider.customModels.map((model, index) => (
                               <div key={index} className={`flex items-center justify-between p-2 rounded ${
                                 darkMode ? 'bg-gray-700' : 'bg-gray-100'
                               }`}>
