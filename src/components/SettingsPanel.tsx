@@ -33,11 +33,11 @@ const SettingsPanel = ({ llmProvider, darkMode, onClose }) => {
       description: 'Ultra-fast inference speeds'
     },
     deepseek: {
-      name: 'DeepSeek',
-      baseUrl: 'https://api.deepseek.com/v1',
-      defaultModels: ['deepseek-chat', 'deepseek-coder'],
-      description: 'Advanced coding and general AI models'
-    },
+  name: 'DeepSeek',
+  baseUrl: 'https://api.deepseek.com/v1',
+  defaultModels: ['deepseek-chat', 'deepseek-coder'], // These are the correct model names
+  description: 'Advanced coding and general AI models'
+},
     custom: {
       name: 'Custom API',
       baseUrl: '',

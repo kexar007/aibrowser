@@ -301,19 +301,19 @@ export const useLLMProvider = (): LLMProvider => {
   };
 
   const getDefaultModelsForProvider = (baseUrl: string): string[] => {
-    if (baseUrl.includes('openai.com')) {
-      return ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'];
-    } else if (baseUrl.includes('anthropic.com')) {
-      return ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'];
-    } else if (baseUrl.includes('localhost:11434')) {
-      return ['llama2', 'mistral', 'codellama'];
-    } else if (baseUrl.includes('groq.com')) {
-      return ['mixtral-8x7b-32768', 'llama2-70b-4096'];
-    } else if (baseUrl.includes('deepseek.com')) {
-      return ['deepseek-chat', 'deepseek-coder'];
-    }
-    return ['gpt-3.5-turbo'];
-  };
+  if (baseUrl.includes('openai.com')) {
+    return ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'];
+  } else if (baseUrl.includes('anthropic.com')) {
+    return ['claude-3-opus', 'claude-3-sonnet', 'claude-3-haiku'];
+  } else if (baseUrl.includes('localhost:11434')) {
+    return ['llama2', 'mistral', 'codellama'];
+  } else if (baseUrl.includes('groq.com')) {
+    return ['mixtral-8x7b-32768', 'llama2-70b-4096'];
+  } else if (baseUrl.includes('deepseek.com')) {
+    return ['deepseek-chat', 'deepseek-coder']; // Correct DeepSeek models
+  }
+  return ['gpt-3.5-turbo'];
+};
 
   const processWithLLM = async (query: string, sources: any[]): Promise<{
     answer: string;
