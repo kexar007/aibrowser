@@ -435,17 +435,25 @@ Please structure your response to be informative, well-organized, and directly a
     return apiSettings.useCustomModel ? apiSettings.customModel : apiSettings.model;
   };
 
-  return {
-    apiSettings,
-    isConnected: apiTested,
-    testResult: testResult || null,
-    testAPI,
-    fetchAvailableModels,
-    processWithLLM,
-    getCurrentModel,
-    setApiSettings,
-    setAvailableModels,
-    setTestResult: (result: TestResult | null) => setTestResult(result),
-    setCustomModels
-  };
+  // Replace the return statement in your useLLMProvider.ts with this:
+
+// Replace the return statement in your useLLMProvider.ts with this:
+
+return {
+  apiSettings,
+  isConnected: apiTested,
+  testResult: testResult || null,
+  availableModels,
+  fetchingModels,
+  customModels,
+  testAPI,
+  fetchAvailableModels,
+  processWithLLM,
+  getCurrentModel,
+  setApiSettings,
+  setAvailableModels,
+  setApiTested,           // ← Add this missing function
+  setTestResult: (result: TestResult | null) => setTestResult(result),
+  setCustomModels
+};
 };
