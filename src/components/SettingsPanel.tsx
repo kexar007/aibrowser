@@ -32,10 +32,10 @@ const SettingsPanel = ({ llmProvider, darkMode, onClose }) => {
       defaultModels: ['mixtral-8x7b-32768', 'llama2-70b-4096'],
       description: 'Ultra-fast inference speeds'
     },
-    deepseek: {
+   deepseek: {
   name: 'DeepSeek',
   baseUrl: 'https://api.deepseek.com/v1',
-  defaultModels: ['deepseek-chat', 'deepseek-coder'], // These are the correct model names
+  defaultModels: ['deepseek-chat', 'deepseek-reasoner'], // These are the CORRECT model names from the official docs
   description: 'Advanced coding and general AI models'
 },
     custom: {
