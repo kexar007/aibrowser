@@ -27,6 +27,13 @@ interface LLMProvider {
     message?: string;
     testing?: boolean;
   } | null;
+  
+  // Missing properties that your hook returns:
+  availableModels: string[];
+  fetchingModels: boolean;
+  customModels: string[];
+  
+  // Methods
   processWithLLM: (query: string, sources: any[]) => Promise<{
     answer: string;
     confidence: number;
@@ -38,16 +45,9 @@ interface LLMProvider {
   fetchAvailableModels: () => Promise<void>;
   
   // Setter methods
-  setApiSettings: (settings: {
-    baseUrl: string;
-    apiKey: string;
-    model: string;
-    customModel: string;
-    useCustomModel: boolean;
-    maxTokens: number;
-    temperature: number;
-  }) => void;
+  setApiSettings: (settings: any | ((prev: any) => any)) => void;
   setAvailableModels: (models: string[]) => void;
+  setApiTested: (tested: boolean) => void;  // This was missing
   setTestResult: (result: {
     success?: boolean;
     message?: string;
@@ -58,6 +58,7 @@ interface LLMProvider {
 
 interface VoiceInput {
   isListening: boolean;
+  isSupported: boolean;  // Add this if your voice hook has it
   startListening: (callback: (transcript: string) => void) => void;
   stopListening: () => void;
 }
